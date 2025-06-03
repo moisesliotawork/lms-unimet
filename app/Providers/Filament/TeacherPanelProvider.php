@@ -27,6 +27,7 @@ class TeacherPanelProvider extends PanelProvider
             ->path('profesor')
             ->brandName("Panel Profesores - LMS UNIMET")
             ->login()
+            ->passwordReset()
             ->colors([
                 'primary' => Color::Amber,
             ])

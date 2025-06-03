@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName("Panel Admin - LMS UNIMET")
+            ->passwordReset()
             ->login()
             ->colors([
                 'primary' => Color::Amber,
