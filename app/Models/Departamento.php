@@ -10,4 +10,9 @@ class Departamento extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function materias()
+    {
+        return $this->hasMany(Materia::class);
+    }
 }
