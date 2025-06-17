@@ -28,7 +28,7 @@ class ProfesorMateriaSeeder extends Seeder
 
         // Asignar materias al profesor
         foreach ($materias as $materia) {
-            $profesor->materiasComoProfesor()->syncWithoutDetaching([
+            $profesor->materias()->syncWithoutDetaching([
                 $materia->id => [
                     'role' => 'profesor',
                 ]

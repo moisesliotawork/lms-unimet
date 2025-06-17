@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Models\Materia;
 
 class TeacherPanelProvider extends PanelProvider
 {
@@ -28,6 +29,11 @@ class TeacherPanelProvider extends PanelProvider
             ->brandName("Panel Profesores - LMS UNIMET")
             ->login()
             ->passwordReset()
+            ->tenant(
+                Materia::class,
+                ownershipRelationship: 'users',
+                slugAttribute: 'slug'
+            )
             ->colors([
                 'primary' => Color::Amber,
             ])

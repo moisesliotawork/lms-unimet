@@ -9,8 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasTenants;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -58,6 +62,21 @@ class User extends Authenticatable implements FilamentUser
     protected $appends = ['phone_prefix', 'phone_number'];
 
 
+    public function materias()
+    {
+        return $this->belongsToMany(Materia::class, 'materia_user');
+    }
+
+    public function getTenants(Panel $panel): Collection
+    {
+        return $this->materias()->get();
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return $this->materias()->where('materias.id', $tenant->getKey())->exists();
+    }
+
     public function getNameAttribute()
     {
         return $this->username;
@@ -89,15 +108,15 @@ class User extends Authenticatable implements FilamentUser
     {
         $panelId = $panel->getId();
 
-        if($panelId === 'admin'){
+        if ($panelId === 'admin') {
             return $this->hasRole('admin');
         }
-        
-        if($panelId === 'profesor'){
+
+        if ($panelId === 'profesor') {
             return $this->hasRole('profesor');
         }
 
-        if($panelId === 'user'){
+        if ($panelId === 'user') {
             return $this->hasRole('estudiante');
         }
 
