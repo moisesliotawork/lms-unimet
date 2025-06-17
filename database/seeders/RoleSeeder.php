@@ -13,10 +13,21 @@ class RoleSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Crear permisos (opcional, si los necesitas)
-        Permission::create(['name' => 'crear-usuarios']);
-        Permission::create(['name' => 'editar-cursos']);
-        Permission::create(['name' => 'inscribir-cursos']);
+        $permissions = [
+            'crear-usuarios',
+            'editar-usuarios',
+            'eliminar-usuarios',
+            'ver-usuarios',
+            'crear-cursos',
+            'editar-cursos',
+            'eliminar-cursos',
+            'ver-cursos',
+            'inscribir-cursos'
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
 
         // Crear roles y asignar permisos
         $admin = Role::create(['name' => 'admin']);
@@ -25,10 +36,10 @@ class RoleSeeder extends Seeder
             'editar-usuarios',
             'eliminar-usuarios',
             'ver-usuarios',
-            'editar-cursos',
             'crear-cursos',
-            'ver-cursos',
+            'editar-cursos',
             'eliminar-cursos',
+            'ver-cursos',
         ]);
 
         $profesor = Role::create(['name' => 'profesor']);
@@ -42,6 +53,7 @@ class RoleSeeder extends Seeder
         $estudiante->givePermissionTo([
             'ver-cursos',
             'ver-usuarios',
+            'inscribir-cursos',
         ]);
     }
 }
