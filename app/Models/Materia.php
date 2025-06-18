@@ -50,7 +50,12 @@ class Materia extends Model implements HasName
     {
         return $this->belongsToMany(User::class, 'materia_user');
     }
-
+    public function profesores()
+    {
+        return $this->belongsToMany(User::class)
+                    ->using(MateriaUser::class)
+                    ->wherePivot('role', 'profesor');
+    }
     public function getFilamentName(): string
     {
         return "{$this->nombre}";
