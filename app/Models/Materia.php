@@ -41,6 +41,8 @@ class Materia extends Model implements HasName
     /**
      * Relación con el modelo Departamento
      */
+
+
     public function departamento()
     {
         return $this->belongsTo(Departamento::class);
@@ -64,5 +66,9 @@ class Materia extends Model implements HasName
     public function getTenantKey(): string
     {
         return $this->slug ?? $this->getKey();
+    }
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class, 'materia_id', 'id');
     }
 }
