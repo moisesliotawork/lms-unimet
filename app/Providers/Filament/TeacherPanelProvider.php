@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Models\Materia;
+use App\Filament\Pages\Auth\EditProfile;
 
 class TeacherPanelProvider extends PanelProvider
 {
@@ -28,6 +29,7 @@ class TeacherPanelProvider extends PanelProvider
             ->path('profesor')
             ->brandName("Panel Profesores - LMS UNIMET")
             ->login()
+            ->profile(page: EditProfile::class)
             ->passwordReset()
             ->tenant(
                 Materia::class,
